@@ -1,0 +1,5 @@
+.popup__field:first-child {
+  box-sizing: border-box;
+  display: block;
+  margin-bottom: 36px;
+}

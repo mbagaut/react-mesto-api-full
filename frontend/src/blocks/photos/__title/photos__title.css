@@ -1,0 +1,12 @@
+.photos__title {
+  max-width: 210px;
+  margin: 0;
+  overflow: hidden;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.208;
+  color: black;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+}

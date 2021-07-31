@@ -1,0 +1,16 @@
+.page__main {
+  margin-bottom: calc(48px + 19 * ((100vw - 320px) / 960));
+}
+
+@media (min-width: 1280px) {
+  .page__main {
+    margin-bottom: 67px;
+  }
+}
+
+@media (max-width: 930px) {
+  .page__main {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+}

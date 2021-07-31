@@ -1,0 +1,9 @@
+.popup__title_popup-del {
+  margin-bottom: 35px;
+}
+
+@media (max-width: 560px) {
+  .popup__title_popup-del {
+    margin-bottom: 35px;
+  }
+}

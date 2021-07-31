@@ -1,0 +1,21 @@
+.person__icon-edit {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  background-color: black;
+  background-image: url(../../../images/button_pen.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 55%;
+  border: 1px solid white;
+  min-width: calc(18px + 6 * ((100vw - 320px) / 960));
+  min-height: calc(18px + 6 * ((100vw - 320px) / 960));
+  cursor: pointer;
+}
+
+@media (min-width: 1280px) {
+  .person__icon-edit {
+    min-width: 24px;
+    min-height: 24px;
+  }
+}

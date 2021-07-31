@@ -1,0 +1,9 @@
+.page__header {
+  margin-bottom: 38px;
+}
+
+@media (max-width: 320px) {
+  .page__header {
+    margin-bottom: 42px;
+  }
+}

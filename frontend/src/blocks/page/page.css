@@ -1,0 +1,21 @@
+.page {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  min-width: 320px;
+  max-width: 880px;
+  margin: 0 auto;
+
+  font-family: "Inter", "Arial", sans-serif;
+  color: #fff;
+  font-style: normal;
+
+  background-color: #000;
+  padding-bottom: calc(36px + 24 * ((100vw - 320px) / 960));
+  text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 1280px) {
+  .page {
+    padding-bottom: 60px;
+  }
+}

@@ -1,0 +1,22 @@
+.header__logo {
+  width: 142px;
+  height: 33px;
+  margin: 0;
+
+  background-image: url(../../../images/logo_team_light.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 930px) {
+  .header__logo {
+    margin-left: 27px;
+  }
+}
+
+@media (max-width: 320px) {
+  .header__logo {
+    width: 103.74px;
+    height: 24.4px;
+  }
+}

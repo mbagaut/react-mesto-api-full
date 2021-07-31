@@ -1,0 +1,92 @@
+@import url("./vendor/normalize.css");
+@import url("./vendor/fonts/fonts.css");
+
+/*----------------------- Блок btn-opacity ------------------------------ */
+
+@import url("./blocks/btn-opacity/btn-opacity.css");
+@import url("./blocks/btn-opacity/_type/btn-opacity_type_low.css");
+@import url("./blocks/btn-opacity/_type/btn-opacity_type_medium.css");
+@import url("./blocks/btn-opacity/_type/btn-opacity_type_high.css");
+
+/*----------------------- Блок Page ------------------------------ */
+
+@import url("./blocks/page/page.css");
+@import url("./blocks/page/__header/page__header.css");
+@import url("./blocks/page/__main/page__main.css");
+@import url("./blocks/page/__authorization/page__authorization.css");
+@import url("./blocks/page/__main/page__footer.css");
+
+/*----------------------- Блок Header ------------------------------ */
+
+@import url("./blocks/header/header.css");
+@import url("./blocks/header/__logo/header__logo.css");
+@import url("./blocks/header/__link/header__link.css");
+@import url("./blocks/header/__user-email/header__user-email.css");
+
+/*----------------------- Блок Person ------------------------------ */
+
+@import url("./blocks/person/person.css");
+@import url("./blocks/person/__header/person__header.css");
+@import url("./blocks/person/__avatar/person__avatar.css");
+@import url("./blocks/person/__photo/person__photo.css");
+@import url("./blocks/person/__photo-btn/person__photo-btn.css");
+@import url("./blocks/person/__container/person__container.css");
+@import url("./blocks/person/__string/person__string.css");
+@import url("./blocks/person/__title/person__title.css");
+@import url("./blocks/person/__job/person__job.css");
+@import url("./blocks/person/__icon-edit/person__icon-edit.css");
+@import url("./blocks/person/__button/person__button.css");
+
+/*----------------------- Блок Photos ------------------------------ */
+
+@import url("./blocks/photos/photos.css");
+@import url("./blocks/photos/__item/photos__item.css");
+@import url("./blocks/photos/__image/photos__image.css");
+@import url("./blocks/photos/__image/photos__icon-del.css");
+@import url("./blocks/photos/__string/photos__string.css");
+@import url("./blocks/photos/__title/photos__title.css");
+@import url("./blocks/photos/__like-column/photos__like-column.css");
+@import url("./blocks/photos/__like-counter/photos__like-counter.css");
+@import url("./blocks/photos/__icon/photos__icon.css");
+@import url("./blocks/photos/__icon/_active/photos__icon_active.css");
+
+/*----------------------- Блок Footer ------------------------------ */
+
+@import url("./blocks/footer/footer.css");
+@import url("./blocks/footer/__author/footer__author.css");
+
+/*----------------------- Блок Popup ------------------------------ */
+
+@import url("./blocks/popup/popup.css");
+@import url("./blocks/popup/_opened/popup_opened.css");
+@import url("./blocks/popup/_img-only/popup_img-only.css");
+@import url("./blocks/popup/__overlay/popup__overlay.css");
+@import url("./blocks/popup/__content/popup__content.css");
+@import url("./blocks/popup/__content/_img-only/popup__content_img-only.css");
+@import url("./blocks/popup/__content/_tooltip-only/popup__content_tooltip-only.css");
+@import url("./blocks/popup/__image/popup__image.css");
+@import url("./blocks/popup/__close/popup__close.css");
+@import url("./blocks/popup/__title/popup__title.css");
+@import url("./blocks/popup/__title/_img-only/popup__title_img-only.css");
+@import url("./blocks/popup/__title/_popup-del/popup__title_popup-del.css");
+@import url("./blocks/popup/__field/popup__fieldset.css");
+@import url("./blocks/popup/__field/popup__field.css");
+@import url("./blocks/popup/__field/_avatar/popup__field_avatar.css");
+@import url("./blocks/popup/__input/popup__input.css");
+@import url("./blocks/popup/__input/_error/popup__input_error.css");
+@import url("./blocks/popup/__input-error/popup__input-error.css");
+@import url("./blocks/popup/__submit-btn/popup__submit-btn.css");
+@import url("./blocks/popup/__submit-btn/_popup-del/popup__submit-btn_popup-del.css");
+@import url("./blocks/popup/__submit-btn/_disabled/popup__submit-btn_disabled.css");
+
+/*----------------------- Блок Authorization ------------------------------ */
+
+@import url("./blocks/authorization/authorization.css");
+
+/*----------------------- Блок Tooltip ------------------------------ */
+
+@import url("./blocks/tooltip/tooltip.css");
+@import url("./blocks/tooltip/__img/tooltip__img.css");
+@import url("./blocks/tooltip/__img/_type/tooltip__img_type_fail.css");
+@import url("./blocks/tooltip/__img/_type/tooltip__img_type_success.css");
+@import url("./blocks/tooltip/__title/tooltip__title.css");

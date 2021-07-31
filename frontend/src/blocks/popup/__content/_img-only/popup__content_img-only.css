@@ -1,0 +1,15 @@
+.popup__content_img-only {
+  padding: 0;
+  background-color: black;
+  border-radius: 0;
+  width: auto;
+  max-width: 75vw;
+  max-height: 75vh;
+  height: 100%;
+}
+
+@media (max-width: 560px) {
+  .popup__content_img-only {
+    padding: 0;
+  }
+}

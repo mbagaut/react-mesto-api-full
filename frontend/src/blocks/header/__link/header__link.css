@@ -1,0 +1,13 @@
+.header__link {
+  color: #ffffff;
+  text-decoration: none;
+
+  font-size: 18px;
+  line-height: 1.22;
+}
+
+@media (max-width: 930px) {
+  .header__link {
+    margin-right: 27px;
+  }
+}

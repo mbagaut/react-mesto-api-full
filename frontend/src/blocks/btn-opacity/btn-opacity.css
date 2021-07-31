@@ -1,0 +1,6 @@
+.btn-opacity {
+  opacity: 1;
+  -webkit-transition: all 0.3s ease 0.1s;
+  -o-transition: all 0.3s ease 0.1s;
+  transition: all 0.3s ease 0.1s;
+}
