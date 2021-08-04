@@ -1,9 +1,7 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
-const allowedCors = [
-  'https://mesto.maratb.nomoredomains.monster',
-  'https://api.mesto.maratb.nomoredomains.monster',
+const ALLOWED_CORS = [
   'http://mesto.maratb.nomoredomains.monster',
-  'http://api.mesto.maratb.nomoredomains.monster',
+  'https://mesto.maratb.nomoredomains.monster',
 ];
 
 // Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
@@ -20,7 +18,7 @@ module.exports = (req, res, next) => {
   const requestHeaders = req.headers['access-control-request-headers'];
 
   // Проверяем, что источник запроса есть среди разрешённых
-  if (allowedCors.includes(origin)) {
+  if (ALLOWED_CORS.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
   }
   // Если это предварительный запрос, добавляем нужные заголовки
@@ -30,7 +28,7 @@ module.exports = (req, res, next) => {
     // разрешаем кросс-доменные запросы с этими заголовками
     res.header('Access-Control-Allow-Headers', requestHeaders);
     // завершаем обработку запроса и возвращаем результат клиенту
-    return res.end();
+    // return res.end();
   }
   next();
 };
