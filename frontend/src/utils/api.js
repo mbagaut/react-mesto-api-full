@@ -94,9 +94,9 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-23",
+  baseUrl: "https://api.mesto.maratb.nomoredomains.monster",
   headers: {
-    authorization: "ac575190-0d35-42fd-b4c8-6b2b3e6183a4",
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
   },
 });

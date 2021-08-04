@@ -1,4 +1,4 @@
-export const BASE_URL = "https://auth.nomoreparties.co";
+export const BASE_URL = "https://mesto.maratb.nomoredomains.monster";
 
 const handleResponse = (response) => {
   return response.ok

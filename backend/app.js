@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const rateLimit = require("express-rate-limit");
 const helmet = require('helmet');
 
 const app = express();
@@ -15,6 +16,12 @@ const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const BadRequestError = require('./errors/bad-request-error');
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Достигнут лимит запросов с вашего IP, повторите попытку позже',
+});
+
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -23,11 +30,18 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../frontend/public')));
 app.use('/', express.json()); // встроенный парсер express
 app.use(helmet()); // настройка заголовков http для защиты от веб-уязвимостей
+app.use(limiter);
 
 app.use(requestLogger); // подключаем логгер запросов до всех обработчиков
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
