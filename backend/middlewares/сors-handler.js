@@ -2,6 +2,8 @@
 const allowedCors = [
   'https://mesto.maratb.nomoredomains.monster',
   'https://api.mesto.maratb.nomoredomains.monster',
+  'http://mesto.maratb.nomoredomains.monster',
+  'http://api.mesto.maratb.nomoredomains.monster',
 ];
 
 // Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
