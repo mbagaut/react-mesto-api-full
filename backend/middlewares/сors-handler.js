@@ -9,7 +9,7 @@ const allowedCors = [
 // Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
 const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
 
-app.use(function(req, res, next) {
+module.exports = (req, res, next) => {
   // Сохраняем источник запроса в переменную origin
   const { origin } = req.headers;
 
@@ -33,4 +33,4 @@ app.use(function(req, res, next) {
     return res.end();
   }
   next();
-});
+};
