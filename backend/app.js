@@ -12,6 +12,7 @@ const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
+const сorsHandler = require('./middlewares/сors-handler');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const BadRequestError = require('./errors/bad-request-error');
@@ -32,6 +33,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 app.use('/', express.json()); // встроенный парсер express
+app.use(сorsHandler); // обработка CORS
 app.use(helmet()); // настройка заголовков http для защиты от веб-уязвимостей
 app.use(limiter);
 
