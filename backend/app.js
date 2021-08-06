@@ -24,6 +24,8 @@ const limiter = rateLimit({
   message: 'Достигнут лимит запросов с вашего IP, повторите попытку позже',
 });
 
+app.use(сorsOptions); // обработка CORS
+
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -34,11 +36,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 // app.use(express.static(path.join(__dirname, '../frontend/public')));
 app.use('/', express.json()); // встроенный парсер express
-// app.use(сorsOptions); // обработка CORS
 app.use(helmet()); // настройка заголовков http для защиты от веб-уязвимостей
 app.use(limiter);
 
-app.use(cors(сorsOptions));
+// app.use(cors(сorsOptions));
 app.use(requestLogger); // подключаем логгер запросов до всех обработчиков
 
 app.get('/crash-test', () => {
