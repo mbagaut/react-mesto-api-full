@@ -7,7 +7,7 @@ class Api {
   //Шаблон запроса
   _sendRequest(path, parameters) {
     return fetch(`${this._url}/${path}`, parameters).then((res) =>
-      res.ok ? res.json() : Promise.reject(res.status)
+      res.ok ? res.json() : Promise.reject(res)
     );
   }
 
@@ -96,7 +96,7 @@ class Api {
 export const api = new Api({
   baseUrl: "https://api.mesto.maratb.nomoredomains.monster",
   headers: {
-    authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
+    "credentials": "include",
   },
 });

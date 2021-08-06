@@ -1,9 +1,9 @@
-export const BASE_URL = "https://mesto.maratb.nomoredomains.monster";
+export const BASE_URL = "https://api.mesto.maratb.nomoredomains.monster";
 
 const handleResponse = (response) => {
   return response.ok
     ? response.json()
-    : Promise.reject(`Ошибка ${response.status}`);
+    : Promise.reject(response);
 };
 
 export const register = (password, email) => {
@@ -12,9 +12,10 @@ export const register = (password, email) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "credentials": "include",
     },
     body: JSON.stringify({ password, email }),
-  }).then(handleResponse);
+  }).then((res) => res.json());
 };
 
 export const authorize = (password, email) => {
@@ -23,18 +24,9 @@ export const authorize = (password, email) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "credentials": "include",
     },
     body: JSON.stringify({ password, email }),
-  }).then(handleResponse);
+  }).then((res) => res.json());
 };
 
-export const getContent = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(handleResponse);
-};

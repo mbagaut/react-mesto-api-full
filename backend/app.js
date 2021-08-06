@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const cors = require('cors');
 const rateLimit = require("express-rate-limit");
 const helmet = require('helmet');
 
@@ -12,7 +13,7 @@ const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
-const сorsHandler = require('./middlewares/access-control-handler');
+// const сorsOptions = require('./middlewares/access-control-handler');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const BadRequestError = require('./errors/bad-request-error');
@@ -31,12 +32,13 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
-app.use(express.static(path.join(__dirname, '../frontend/public')));
+// app.use(express.static(path.join(__dirname, '../frontend/public')));
 app.use('/', express.json()); // встроенный парсер express
-app.use(сorsHandler); // обработка CORS
+// app.use(сorsHandler); // обработка CORS
 app.use(helmet()); // настройка заголовков http для защиты от веб-уязвимостей
 app.use(limiter);
 
+app.use(cors());
 app.use(requestLogger); // подключаем логгер запросов до всех обработчиков
 
 app.get('/crash-test', () => {
@@ -72,11 +74,12 @@ app.use((req, res, next) => {
 });
 
 app.use(errorLogger); // подключаем логгер ошибок после всех обработчиков
-
+console.log(`Тут работает`);
 // обработчик ошибок celebrate
 app.use(errors());
 // централизованный обработчик
 app.use((err, req, res, next) => {
+  console.log(`Всё что есть`);
   if (err.statusCode) {
     res.status(err.statusCode).send({ message: err.message });
   } else {

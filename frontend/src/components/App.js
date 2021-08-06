@@ -34,23 +34,10 @@ function App(props) {
   const [currentUser, setCurrentUser] = React.useState({});
   const [buttonText, setButtonText] = React.useState("");
 
-  React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCardList()])
-      .then(([userData, cardsData]) => {
-        setCurrentUser(userData);
-        setCards(cardsData);
-      })
-      .catch((err) => console.log(`АЛЯРМ!: ${err}`));
-  }, []);
-
   const handleCardClick = (card) => {
     setSelectedCard(card);
   };
 
-  // К сожалению, без обнуления текста кнопки получается такой эффект, что, к примеру, после удаления карточки
-  // в любом другом popup (при первом открытии) кнопка будет иметь текст - "Удалить".
-  // В popupWithForm у меня выбор текста кнопки вот так сделан: {buttonText || defaultButtonText}
-  // Поэтому чтобы отрисовать базовый текст мне нужно чтобы buttonText был пустой)) Не соображу как сделать подругому.
   function handleEditAvatarClick() {
     setButtonText("");
     setIsEditAvatarPopupOpen(true);
@@ -153,64 +140,80 @@ function App(props) {
 
   const [loggedIn, setLoggedIn] = React.useState(false);
 
-  function tokenCheck() {
-    if (localStorage.getItem("jwt")) {
-      const jwt = localStorage.getItem("jwt");
-      auth
-        .getContent(jwt)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            history.push("/");
-          }
-        })
-        .catch((err) => console.log(`АЛЯРМ!: ${err}`));
+  React.useEffect(() => {
+    if (loggedIn === true) {
+      api
+      .getCardList()
+      .then((cardsData) => {
+        setCards(cardsData);
+      })
+      .catch((err) => console.log(`АЛЯРМ!: ${err}`));
+    } else {
+      setCards([]);
     }
+  }, [loggedIn]);
+
+  function checkCredentials() {
+    api
+      .getUserInfo()
+      .then((userData) => {
+        if(userData) {
+          localStorage.setItem("email", userData.email);
+          setCurrentUser(userData);
+          setLoggedIn(true);
+          history.push("/");
+        } else {
+          history.push("/sign-in");
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   React.useEffect(() => {
-    tokenCheck();
+    checkCredentials();
   }, []);
 
   const [infoTooltip, setInfoTooltip] = React.useState("");
 
   function closeTooltip() {
-    setInfoTooltip("");
+    if(infoTooltip === "success") {
+      setInfoTooltip("");
+      history.push("/sign-in");
+    } else {
+      setInfoTooltip("");
+    }
   }
 
   const handleRegister = (password, email) => {
     auth
       .register(password, email)
-      .then((data) => {
-        if (data) {
-          // const token = data._id;
-          // localStorage.setItem("jwt", token);
-          localStorage.setItem("email", email);
-          setLoggedIn(true);
-          setInfoTooltip("success");
-        }
-      })
-      .catch((err) => {
-        setInfoTooltip("fail");
-        console.log(`АЛЯРМ!: ${err}`);
-      });
+        .then((data) => {
+          if (data.message) {
+            throw new Error(data.message);
+          } else {
+            setInfoTooltip("success");
+          }
+        })
+        .catch((err) => {
+          setInfoTooltip("fail");
+          console.log(err);
+        });
   };
 
   const handleLogin = (password, email) => {
     auth
       .authorize(password, email)
       .then((data) => {
-        if (data.token) {
-          const token = data.token;
-          localStorage.setItem("jwt", token);
-          localStorage.setItem("email", email);
-          setLoggedIn(true);
-          history.push("/");
+        console.log(data);
+        if (data.message === 'Вы успешно авторизованы!') {
+          checkCredentials();
+        } else {
+          throw new Error(data.message);
         }
       })
       .catch((err) => {
         setInfoTooltip("fail");
-        console.log(`АЛЯРМ!: ${err}`);
+        console.log(err);
       });
   };
 

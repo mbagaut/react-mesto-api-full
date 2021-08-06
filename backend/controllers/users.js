@@ -43,7 +43,7 @@ const createUser = (req, res, next) => {
     email,
     password,
   } = req.body;
-
+  console.log(req.body);
   // const regex = /^(?=.*[0-9])(?=.*[a-z])(?=\S+$).{6, 16}$/;
   // (?=.*[@#$%^&+=]) - при необходимости можно добавить требование к содержанию символов
   const requiredPatterns = {
@@ -159,10 +159,11 @@ const login = (req, res, next) => {
       );
       res
         .cookie('jwt', token, {
-          maxAge: 3600000,
+          maxAge: 3600000*24*2,
           httpOnly: true,
+          path: "/",
         })
-        .send({ message: 'Вы успешно авторизованны!' });
+        .send({ message: 'Вы успешно авторизованы!' });
     })
     .catch((err) => {
       if (err.name === 'AuthorizationError') {
