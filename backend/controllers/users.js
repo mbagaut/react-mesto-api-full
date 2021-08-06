@@ -161,6 +161,8 @@ const login = (req, res, next) => {
         .cookie('jwt', token, {
           maxAge: 3600000*24*2,
           httpOnly: true,
+          sameSite: process.env.NODE_ENV === "production" ? "none" : true,
+          secure: process.env.NODE_ENV === "production" ? true : false,
           path: "/",
         })
         .send({ message: 'Вы успешно авторизованы!' });

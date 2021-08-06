@@ -7,7 +7,7 @@ const ALLOWED_CORS = [
 // Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
 // const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
 
-// module.exports = (req, res, next) => {
+// module.exports.corsOptions = (req, res, next) => {
   // Сохраняем источник запроса в переменную origin
 //  const { origin } = req.headers;
 
@@ -28,8 +28,8 @@ const ALLOWED_CORS = [
     // разрешаем кросс-доменные запросы с этими заголовками
 //    res.header('Access-Control-Allow-Headers', requestHeaders);
     // завершаем обработку запроса и возвращаем результат клиенту
-    // return res.end();
-//  }
+//     return res.end();
+// }
 //  next();
 //};
 
@@ -39,7 +39,7 @@ module.exports.corsOptions = {
     if (ALLOWED_CORS.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+     callback(new Error('Not allowed by CORS'));
     }
   },
 };
