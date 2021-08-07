@@ -18,12 +18,12 @@ class Api {
     });
   }
 
-  getUserInfo() {
-    return this._sendRequest(`users/me`, {
-      method: "GET",
-      headers: this._headers,
-    });
-  }
+  //getUserInfo() {
+  //  return this._sendRequest(`users/me`, {
+  //    method: "GET",
+  //    headers: this._headers,
+  //  });
+  //}
 
   postCard(name, link) {
     return this._sendRequest(`cards`, {

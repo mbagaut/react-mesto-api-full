@@ -12,21 +12,31 @@ export const register = (password, email) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "credentials": "include",
+//      "credentials": "include",
     },
     body: JSON.stringify({ password, email }),
   }).then((res) => res.json());
 };
 
-export const authorize = (password, email) => {
+export const login = (password, email) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "credentials": "include",
+//      "credentials": "include",
     },
     body: JSON.stringify({ password, email }),
   }).then((res) => res.json());
 };
 
+export const authorize = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => res.json());
+};

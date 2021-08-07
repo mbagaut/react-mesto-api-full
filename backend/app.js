@@ -13,18 +13,18 @@ const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
-const сorsOptions = require('./middlewares/access-control-handler');
+const { corsOptions } = require('./middlewares/access-control-handler');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const BadRequestError = require('./errors/bad-request-error');
+
+app.use(corsOptions);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: 'Достигнут лимит запросов с вашего IP, повторите попытку позже',
 });
-
-app.use(сorsOptions); // обработка CORS
 
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -39,7 +39,7 @@ app.use('/', express.json()); // встроенный парсер express
 app.use(helmet()); // настройка заголовков http для защиты от веб-уязвимостей
 app.use(limiter);
 
-// app.use(cors(сorsOptions));
+//app.use(cors(сorsOptions));
 app.use(requestLogger); // подключаем логгер запросов до всех обработчиков
 
 app.get('/crash-test', () => {

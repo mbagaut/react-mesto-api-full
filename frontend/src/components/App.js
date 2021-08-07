@@ -140,80 +140,150 @@ function App(props) {
 
   const [loggedIn, setLoggedIn] = React.useState(false);
 
+  function tokenCheck() {
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
+      console.log(`Токен лежит в локале ${jwt}`);
+      auth
+        .authorize(jwt)
+          .then((res) => {
+            if (res.user) {
+              const { user } = res;
+              setLoggedIn(true);
+              localStorage.setItem('email', user.email);
+              setCurrentUser(user);
+              history.push("/");
+            }
+        })
+        .catch((err) => console.log(`АЛЯРМ!: ${err}`));
+    }
+  }
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  const [infoTooltip, setInfoTooltip] = React.useState("");
+
   React.useEffect(() => {
     if (loggedIn === true) {
       api
       .getCardList()
       .then((cardsData) => {
+        console.log(cardsData);
         setCards(cardsData);
       })
-      .catch((err) => console.log(`АЛЯРМ!: ${err}`));
+      .catch((err) => console.log(err));
     } else {
       setCards([]);
     }
   }, [loggedIn]);
 
-  function checkCredentials() {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        if(userData) {
-          localStorage.setItem("email", userData.email);
-          setCurrentUser(userData);
-          setLoggedIn(true);
-          history.push("/");
-        } else {
-          history.push("/sign-in");
-        }
-      })
-      .catch((err) => console.log(err));
-  }
+//  function checkCredentials() {
+//    api
+//      .getUserInfo()
+//      .then((userData) => {
+//        if(userData) {
+//          localStorage.setItem("email", userData.email);
+//          setCurrentUser(userData);
+//          setLoggedIn(true);
+//          history.push("/");
+//        } else {
+//          history.push("/sign-in");
+//        }
+//      })
+//      .catch((err) => console.log(err));
+//  }
 
-  React.useEffect(() => {
-    checkCredentials();
-  }, []);
-
-  const [infoTooltip, setInfoTooltip] = React.useState("");
+//  React.useEffect(() => {
+//    checkCredentials();
+//  }, []);
 
   function closeTooltip() {
     if(infoTooltip === "success") {
       setInfoTooltip("");
       history.push("/sign-in");
+      changeHeaderLink();
     } else {
       setInfoTooltip("");
     }
   }
 
+//  const handleRegister = (password, email) => {
+//    auth
+//      .register(password, email)
+//        .then((data) => {
+//          if (data.message) {
+//            throw new Error(data.message);
+//          } else {
+//            setInfoTooltip("success");
+//          }
+//        })
+//        .catch((err) => {
+//          setInfoTooltip("fail");
+//          console.log(err);
+//        });
+//  };
+
   const handleRegister = (password, email) => {
     auth
       .register(password, email)
-        .then((data) => {
-          if (data.message) {
-            throw new Error(data.message);
-          } else {
-            setInfoTooltip("success");
-          }
-        })
-        .catch((err) => {
-          setInfoTooltip("fail");
-          console.log(err);
-        });
-  };
-
-  const handleLogin = (password, email) => {
-    auth
-      .authorize(password, email)
-      .then((data) => {
-        console.log(data);
-        if (data.message === 'Вы успешно авторизованы!') {
-          checkCredentials();
+      .then((res) => {
+        if (res._id) {
+          // const token = data._id;
+          // localStorage.setItem("jwt", token);
+          // setLoggedIn(true);
+          setInfoTooltip("success");
         } else {
-          throw new Error(data.message);
+          if(res.message === "Validation failed") {
+            throw new Error(res.validation.body.message);
+          }
+          throw new Error(res.message);
         }
       })
       .catch((err) => {
         setInfoTooltip("fail");
         console.log(err);
+      });
+  };
+
+
+//  const handleLogin = (password, email) => {
+//    auth
+//      .authorize(password, email)
+//      .then((data) => {
+//        console.log(data);
+//        if (data.message === 'Вы успешно авторизованы!') {
+//          checkCredentials();
+//        } else {
+//          throw new Error(data.message);
+//        }
+//      })
+//      .catch((err) => {
+//        setInfoTooltip("fail");
+//        console.log(err);
+//      });
+//  };
+
+  const handleLogin = (password, email) => {
+    auth
+      .login(password, email)
+      .then((res) => {
+        if (res.token) {
+          const { token } = res;
+          console.log(`Логин прошли, вот токен: ${token}`);
+          localStorage.setItem("jwt", token);
+          tokenCheck();
+        } else {
+          if(res.message === "Validation failed") {
+            throw new Error(res.validation.body.message);
+          }
+          throw new Error(res.message);
+        }
+      })
+      .catch((err) => {
+        setInfoTooltip("fail");
+        console.log(`АЛЯРМ!: ${err}`);
       });
   };
 

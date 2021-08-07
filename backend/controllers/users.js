@@ -32,7 +32,7 @@ const passwordValidator = (obj, password) => {
     obj[prop].regex.test(password) ? false : errorMessages.push(obj[prop].message)
   ));
 
-  return errorMessages.length > 0 ? errorMessages : true;
+  return errorMessages.length > 0 ? `Пароль должен: ${ errorMessages }` : true;
 };
 
 const createUser = (req, res, next) => {
@@ -44,24 +44,25 @@ const createUser = (req, res, next) => {
     password,
   } = req.body;
   console.log(req.body);
+
   // const regex = /^(?=.*[0-9])(?=.*[a-z])(?=\S+$).{6, 16}$/;
   // (?=.*[@#$%^&+=]) - при необходимости можно добавить требование к содержанию символов
   const requiredPatterns = {
     one: {
       regex: /^(?=.*[0-9])/g,
-      message: 'Пароль должен содержать хотя бы одно число',
+      message: 'содержать хотя бы одно число',
     },
     two: {
       regex: /^(?=.*[a-zа-яё])/g,
-      message: 'Пароль должен содержать хотя бы одну букву в нижнем регистре',
+      message: 'содержать хотя бы одну букву в нижнем регистре',
     },
     three: {
       regex: /^(?=\S+$)/g,
-      message: 'Пароль не должен содержать пробелов',
+      message: 'не иметь пробелов',
     },
     four: {
       regex: /^(?=.{6,16}$)/,
-      message: 'Пароль должен содержать от 6 до 16 символов',
+      message: 'содержать от 6 до 16 символов',
     },
   };
   const isPasswordValid = passwordValidator(requiredPatterns, password);
@@ -157,15 +158,18 @@ const login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res
-        .cookie('jwt', token, {
-          maxAge: 3600000*24*2,
-          httpOnly: true,
-          sameSite: process.env.NODE_ENV === "production" ? "none" : true,
-          secure: process.env.NODE_ENV === "production" ? true : false,
-          path: "/",
-        })
-        .send({ message: 'Вы успешно авторизованы!' });
+      // Куки не сохраняются в браузере, переделываю на jwt
+      //res
+        //.cookie('jwt', token, {
+          //maxAge: 3600000*24*200,
+          //httpOnly: true,
+          //sameSite: process.env.NODE_ENV === "production" ? "none" : true,
+          //secure: process.env.NODE_ENV === "production" ? true : false,
+          //path: "/",
+          //})
+        //.send({ message: 'Вы успешно авторизованы!' });
+      res.status(200).json({ token });
+
     })
     .catch((err) => {
       if (err.name === 'AuthorizationError') {
@@ -183,7 +187,7 @@ const getMyData = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь по заданному id отсутствует в базе');
     })
-    .then((user) => res.status(200).send({ data: user }))
+    .then((user) => res.status(200).send({ user }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError(err.message));
