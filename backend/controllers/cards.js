@@ -9,7 +9,7 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner: _id })
-    .then((card) => res.status(200).send({ card }))
+    .then((card) => res.status(200).send( card ))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
@@ -20,7 +20,7 @@ const createCard = (req, res, next) => {
 
 const getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.status(200).send({ data: cards }))
+    .then((cards) => res.status(200).send( cards ))
     .catch(() => next(new InternalServerError('Ошибка сервера')));
 };
 
@@ -51,7 +51,7 @@ const likeCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Карточка по заданному id отсутствует в базе');
     })
-    .then((card) => res.status(200).send({ data: card }))
+    .then((card) => res.status(200).send( card ))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError(err.message));
@@ -64,11 +64,12 @@ const likeCard = (req, res, next) => {
 };
 
 const dislikeCard = (req, res, next) => {
+  console.log("Пытаемся удалить лайк")
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
     .orFail(() => {
       throw new NotFoundError('Карточка по заданному id отсутствует в базе');
     })
-    .then((card) => res.status(200).send({ data: card }))
+    .then((card) => res.status(200).send( card ))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError(err.message));

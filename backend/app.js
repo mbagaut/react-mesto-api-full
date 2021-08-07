@@ -18,7 +18,7 @@ const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const BadRequestError = require('./errors/bad-request-error');
 
-app.use(corsOptions);
+app.use(cors());
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,

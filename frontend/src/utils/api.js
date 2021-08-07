@@ -11,10 +11,13 @@ class Api {
     );
   }
 
-  getCardList() {
+  getCardList(token) {
     return this._sendRequest(`cards`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
   }
 
@@ -25,10 +28,13 @@ class Api {
   //  });
   //}
 
-  postCard(name, link) {
+  postCard(token, name, link) {
     return this._sendRequest(`cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name: name,
         link: link,
@@ -36,10 +42,13 @@ class Api {
     });
   }
 
-  changeUserInfo(formValues) {
+  changeUserInfo(token, formValues) {
     return this._sendRequest(`users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name: formValues.name,
         about: formValues.about,
@@ -47,56 +56,70 @@ class Api {
     });
   }
 
-  changeAvatar(avatarLink) {
+  changeAvatar(token, avatarLink) {
     return this._sendRequest(`users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         avatar: avatarLink,
       }),
     });
   }
 
-  changeLikeCardStatus(id, isLiked) {
-    if (isLiked) {
-      return this._sendRequest(`cards/likes/${id}`, {
+  changeLikeCardStatus(token, id, notLikedYet) {
+    if (notLikedYet) {
+      return this._sendRequest(`cards/${id}/likes`, {
         method: "PUT",
-        headers: this._headers,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
     } else {
-      return this._sendRequest(`cards/likes/${id}`, {
+      return this._sendRequest(`cards/${id}/likes`, {
         method: "DELETE",
-        headers: this._headers,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
     }
   }
 
-  putLike(id) {
-    return this._sendRequest(`cards/likes/${id}`, {
-      method: "PUT",
-      headers: this._headers,
-    });
-  }
+//  putLike(token, id) {
+//    return this._sendRequest(`cards/likes/${id}`, {
+//      method: "PUT",
+//      headers: {
+//        Authorization: `Bearer ${token}`,
+//        "Content-Type": "application/json",
+//      },
+//    });
+//  }
 
-  deleteLike(id) {
-    return this._sendRequest(`cards/likes/${id}`, {
-      method: "DELETE",
-      headers: this._headers,
-    });
-  }
+//  deleteLike(token, id) {
+//    return this._sendRequest(`cards/likes/${id}`, {
+//      method: "DELETE",
+//      headers: {
+//        Authorization: `Bearer ${token}`,
+//        "Content-Type": "application/json",
+//      },
+//    });
+//  }
 
-  deleteCard(id) {
+  deleteCard(token, id) {
     return this._sendRequest(`cards/${id}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
   }
 }
 
 export const api = new Api({
   baseUrl: "https://api.mesto.maratb.nomoredomains.monster",
-  headers: {
-    "Content-Type": "application/json",
-    "credentials": "include",
-  },
 });

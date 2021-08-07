@@ -114,7 +114,7 @@ const changeProfile = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь по заданному id отсутствует в базе');
     })
-    .then((user) => res.status(200).send({ data: user }))
+    .then((user) => res.status(200).send( user ))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
@@ -127,8 +127,9 @@ const changeProfile = (req, res, next) => {
 };
 
 const changeAvatar = (req, res, next) => {
+  const { _id } = req.user;
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, { avatar },
+  User.findByIdAndUpdate(_id, { avatar },
     {
       new: true,
       runValidators: true,
@@ -136,7 +137,7 @@ const changeAvatar = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь по заданному id отсутствует в базе');
     })
-    .then((user) => res.status(200).send({ data: user }))
+    .then((user) => res.status(200).send( user ))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));

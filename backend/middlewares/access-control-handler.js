@@ -43,12 +43,12 @@ const ALLOWED_CORS = [
   // Проверяем, что источник запроса есть среди разрешённых
   if (ALLOWED_CORS.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Domain', '.mesto.maratb.nomoredomains.monster');
+    //res.header('Access-Control-Allow-Credentials', true);
+    //res.header('Domain', '.mesto.maratb.nomoredomains.monster');
   }
   // Если это предварительный запрос, добавляем нужные заголовки
   if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Credentials', true)
+    //res.header('Access-Control-Allow-Credentials', true)
     // разрешаем кросс-доменные запросы любых типов (по умолчанию)
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     // разрешаем кросс-доменные запросы с этими заголовками

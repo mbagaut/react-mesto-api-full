@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
 
 //  const { jwt: token } = req.cookies;
   const { authorization } = req.headers;
-  //console.log(authorization);
+  console.log(authorization);
 
   //if (!token) {
     //throw new UnauthorizedError('Вы не авторизованы');
