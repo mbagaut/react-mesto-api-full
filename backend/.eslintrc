@@ -1,4 +1,7 @@
 {
+  "env": {
+    "mocha": true
+  },
   "extends": [
     "airbnb-base",
     "plugin:mocha/recommended"
@@ -11,9 +14,6 @@
           "_id"
         ]
       }
-    ],
-    "plugins": [
-      "mocha"
     ],
     "no-console": "off"
   }

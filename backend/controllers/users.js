@@ -32,7 +32,7 @@ const passwordValidator = (obj, password) => {
     obj[prop].regex.test(password) ? false : errorMessages.push(obj[prop].message)
   ));
 
-  return errorMessages.length > 0 ? `Пароль должен: ${ errorMessages }` : true;
+  return errorMessages.length > 0 ? `Пароль должен: ${errorMessages}` : true;
 };
 
 const createUser = (req, res, next) => {
@@ -114,7 +114,7 @@ const changeProfile = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь по заданному id отсутствует в базе');
     })
-    .then((user) => res.status(200).send( user ))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
@@ -137,7 +137,7 @@ const changeAvatar = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь по заданному id отсутствует в базе');
     })
-    .then((user) => res.status(200).send( user ))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
@@ -160,17 +160,16 @@ const login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       // Куки не сохраняются в браузере, переделываю на jwt
-      //res
-        //.cookie('jwt', token, {
-          //maxAge: 3600000*24*200,
-          //httpOnly: true,
-          //sameSite: process.env.NODE_ENV === "production" ? "none" : true,
-          //secure: process.env.NODE_ENV === "production" ? true : false,
-          //path: "/",
-          //})
-        //.send({ message: 'Вы успешно авторизованы!' });
+      // res
+      // .cookie('jwt', token, {
+      // maxAge: 3600000*24*200,
+      // httpOnly: true,
+      // sameSite: process.env.NODE_ENV === "production" ? "none" : true,
+      // secure: process.env.NODE_ENV === "production" ? true : false,
+      // path: "/",
+      // })
+      // .send({ message: 'Вы успешно авторизованы!' });
       res.status(200).json({ token });
-
     })
     .catch((err) => {
       if (err.name === 'AuthorizationError') {

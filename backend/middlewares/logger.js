@@ -6,7 +6,7 @@ const dirPath = path.join(__dirname, '../logs');
 
 const options = {
   filename: '',
-}
+};
 
 // логгер запросов
 const requestLogger = expressWinston.logger({

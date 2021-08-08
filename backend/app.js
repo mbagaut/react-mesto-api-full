@@ -1,19 +1,18 @@
 require('dotenv').config();
-
 const express = require('express');
 const cors = require('cors');
-const rateLimit = require("express-rate-limit");
+const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 
 const app = express();
-const path = require('path');
+// const path = require('path');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
-const { corsOptions } = require('./middlewares/access-control-handler');
+// const { corsOptions } = require('./middlewares/access-control-handler');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const BadRequestError = require('./errors/bad-request-error');
@@ -38,10 +37,11 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use('/', express.json()); // встроенный парсер express
 app.use(helmet()); // настройка заголовков http для защиты от веб-уязвимостей
 
-//app.use(cors(сorsOptions));
+// app.use(cors(сorsOptions));
 app.use(requestLogger); // подключаем логгер запросов до всех обработчиков
 
-app.use(limiter); // подключаем лимитер после логгера, чтобы запросы отклоненные лимитером сохранились в логах
+// подключаем лимитер после логгера, чтобы запросы отклоненные лимитером сохранились в логах
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -76,12 +76,10 @@ app.use((req, res, next) => {
 });
 
 app.use(errorLogger); // подключаем логгер ошибок после всех обработчиков
-console.log(`Тут работает`);
 // обработчик ошибок celebrate
 app.use(errors());
 // централизованный обработчик
 app.use((err, req, res, next) => {
-  console.log(`Всё что есть`);
   if (err.statusCode) {
     res.status(err.statusCode).send({ message: err.message });
   } else {
