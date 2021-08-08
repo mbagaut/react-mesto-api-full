@@ -37,10 +37,11 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 // app.use(express.static(path.join(__dirname, '../frontend/public')));
 app.use('/', express.json()); // встроенный парсер express
 app.use(helmet()); // настройка заголовков http для защиты от веб-уязвимостей
-app.use(limiter);
 
 //app.use(cors(сorsOptions));
 app.use(requestLogger); // подключаем логгер запросов до всех обработчиков
+
+app.use(limiter); // подключаем лимитер после логгера, чтобы запросы отклоненные лимитером сохранились в логах
 
 app.get('/crash-test', () => {
   setTimeout(() => {
