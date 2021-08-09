@@ -20,7 +20,7 @@ const createCard = (req, res, next) => {
 
 const getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.status(200).send(cards))
+    .then((cards) => res.status(200).send(cards.reverse()))
     .catch(() => next(new InternalServerError('Ошибка сервера')));
 };
 
